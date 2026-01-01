@@ -1,0 +1,13 @@
+torch
+torch-geometric
+sentence-transformers
+chromadb
+streamlit
+pypdf
+python-docx
+pandas
+scikit-learn
+reportlab
+tqdm
+requests
+google.generativeai

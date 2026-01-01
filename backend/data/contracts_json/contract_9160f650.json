@@ -1,0 +1,230 @@
+{
+  "clauses": [
+    {
+      "clause_index": 0,
+      "text": "SaaS Subscription Agreement\nLicense Grant\nCustomer is granted a non I exclusive, non I transferable right to access the service",
+      "blocks": [
+        {
+          "page": 0,
+          "bbox": [
+            176.96701049804688,
+            76.73999786376953,
+            435.032958984375,
+            101.5260009765625
+          ],
+          "text": "SaaS Subscription Agreement"
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            153.25,
+            448.3699035644531,
+            166.99000549316406
+          ],
+          "text": "Customer is granted a non I exclusive, non I transferable right to access the service."
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            273.25,
+            342.89996337890625,
+            286.989990234375
+          ],
+          "text": "Provider will implement industry I standard security controls."
+        }
+      ],
+      "risk": {
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 38.260964453s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 38\n}\n]"
+      }
+    },
+    {
+      "clause_index": 1,
+      "text": "Uptime Commitment\nProvider guarantees 99.5% monthly uptime",
+      "blocks": [
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            153.25,
+            448.3699035644531,
+            166.99000549316406
+          ],
+          "text": "Customer is granted a non I exclusive, non I transferable right to access the service."
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            189.02000427246094,
+            214.8920135498047,
+            208.29800415039062
+          ],
+          "text": "Uptime Commitment"
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            213.25,
+            272.52996826171875,
+            226.99000549316406
+          ],
+          "text": "Provider guarantees 99.5% monthly uptime."
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            273.25,
+            342.89996337890625,
+            286.989990234375
+          ],
+          "text": "Provider will implement industry I standard security controls."
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            333.25,
+            318.0899658203125,
+            346.989990234375
+          ],
+          "text": "Either party may terminate with 30 days written notice."
+        }
+      ],
+      "risk": {
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 37.929163849s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 37\n}\n]"
+      }
+    },
+    {
+      "clause_index": 2,
+      "text": "Data Security\nProvider will implement industry I standard security controls",
+      "blocks": [
+        {
+          "page": 0,
+          "bbox": [
+            176.96701049804688,
+            76.73999786376953,
+            435.032958984375,
+            101.5260009765625
+          ],
+          "text": "SaaS Subscription Agreement"
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            153.25,
+            448.3699035644531,
+            166.99000549316406
+          ],
+          "text": "Customer is granted a non I exclusive, non I transferable right to access the service."
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            213.25,
+            272.52996826171875,
+            226.99000549316406
+          ],
+          "text": "Provider guarantees 99.5% monthly uptime."
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            249.02000427246094,
+            167.4739990234375,
+            268.2980041503906
+          ],
+          "text": "Data Security"
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            273.25,
+            342.89996337890625,
+            286.989990234375
+          ],
+          "text": "Provider will implement industry I standard security controls."
+        }
+      ],
+      "risk": {
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 37.57906844s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 37\n}\n]"
+      }
+    },
+    {
+      "clause_index": 3,
+      "text": "Termination\nEither party may terminate with 30 days written notice.",
+      "blocks": [
+        {
+          "page": 0,
+          "bbox": [
+            176.96701049804688,
+            76.73999786376953,
+            435.032958984375,
+            101.5260009765625
+          ],
+          "text": "SaaS Subscription Agreement"
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            153.25,
+            448.3699035644531,
+            166.99000549316406
+          ],
+          "text": "Customer is granted a non I exclusive, non I transferable right to access the service."
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            213.25,
+            272.52996826171875,
+            226.99000549316406
+          ],
+          "text": "Provider guarantees 99.5% monthly uptime."
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            273.25,
+            342.89996337890625,
+            286.989990234375
+          ],
+          "text": "Provider will implement industry I standard security controls."
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            309.0199890136719,
+            158.12200927734375,
+            328.2980041503906
+          ],
+          "text": "Termination"
+        },
+        {
+          "page": 0,
+          "bbox": [
+            78.0,
+            333.25,
+            318.0899658203125,
+            346.989990234375
+          ],
+          "text": "Either party may terminate with 30 days written notice."
+        }
+      ],
+      "risk": {
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 37.229789463s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 37\n}\n]"
+      }
+    }
+  ]
+}

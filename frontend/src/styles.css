@@ -1,0 +1,406 @@
+/* ========== GLOBAL ========== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  background: #F5F6F7;
+  color: #1C1E21;
+}
+
+/* Container */
+.container {
+  padding: 30px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+  background: #FFFFFF;
+  padding: 20px 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: #1C1E21;
+}
+
+.tab-container {
+  display: flex;
+  gap: 12px;
+}
+
+.tab {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid #E1E4E8;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-size: 14px;
+}
+
+.tab:hover {
+  background: #F0F1F2;
+}
+
+.tab.active {
+  background: #4A6CF7;
+  color: white;
+  border-color: #4A6CF7;
+}
+
+/* ========== CARD PANELS ========== */
+.card {
+  background: #FFFFFF;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  margin-bottom: 25px;
+}
+
+h2 {
+  margin-top: 0;
+  font-weight: 600;
+}
+
+/* ========== TEXTAREA ========== */
+textarea {
+  width: 100%;
+  height: 160px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #E1E4E8;
+  resize: vertical;
+  font-size: 15px;
+  background: white;
+  color: #1C1E21;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #4A6CF7;
+  box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.15);
+}
+
+/* ========== BUTTONS ========== */
+button {
+  padding: 12px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+button.primary {
+  background: #4A6CF7;
+  color: white;
+}
+
+button.secondary {
+  background: #F0F1F2;
+  color: #1C1E21;
+}
+
+/* ========== FILE UPLOAD ========== */
+.file-upload {
+  display: inline-block;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1px solid #E1E4E8;
+  background: #FFFFFF;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.file-upload:hover {
+  background: #F0F1F2;
+}
+
+/* ========== RESULTS ========== */
+.result-box {
+  margin-top: 20px;
+  padding: 18px;
+  background: #FFFFFF;
+  border-radius: 14px;
+  border: 1px solid #E1E4E8;
+}
+
+.error {
+  color: #D63031;
+  font-weight: 500;
+}
+
+/* ========== BADGES ========== */
+.badge {
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 100px;
+  color: white;
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.badge-high {
+  background: #E74C3C;
+}
+
+.badge-medium {
+  background: #F39C12;
+}
+
+.badge-low {
+  background: #27AE60;
+}
+
+/* ========== CLAUSE CARDS ========== */
+.clause-box {
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #E1E4E8;
+  background: #FFFFFF;
+  margin-bottom: 12px;
+}
+
+.search-bar {
+  padding: 8px 12px;
+  border: 1px solid var(--muted-border);
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 14px;
+  width: 240px;
+  margin-right: 20px;
+  transition: 0.15s ease;
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 6px rgba(79, 139, 255, 0.25);
+}
+
+.risk-filters {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.filter-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--muted-border);
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.15s;
+}
+
+.filter-btn:hover {
+  background: #f8f9fb;
+}
+
+.filter-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.pdf-viewer { background: #ffffff; }
+.pdf-page { display:block; width:100%; }
+.pdf-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: rgba(255, 214, 0, 0.18);
+  border-left: 6px solid rgba(255, 214, 0, 0.9);
+  pointer-events: none;
+}
+.pdf-page-wrapper {
+  position: relative;
+}
+
+/* highlight rectangles inserted as absolute children of page wrapper */
+.pdf-highlight-rect {
+  position: absolute;
+  z-index: 30;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* small polishing: active clause box style if you want to highlight clicked clause in list */
+.active-clause {
+  border-left: 4px solid rgba(79,139,255,0.16);
+  background: linear-gradient(180deg, rgba(79,139,255,0.02), transparent);
+}
+
+.mode-switch {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+
+.btn.small {
+  padding: 4px 10px;
+  font-size: 13px;
+}
+
+.btn.small.active {
+  background-color: var(--primary);
+  color: white;
+}
+.gnn-result {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fafafa;
+  margin-bottom: 20px;
+}
+
+.badge-gnn {
+  background: purple;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+.probabilities {
+  margin-top: 10px;
+}
+
+.prob-bar {
+  display: flex;
+  height: 26px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 5px;
+  background: #eee;
+}
+
+.prob {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: white;
+}
+
+.prob.high {
+  background: #d9534f;
+}
+
+.prob.medium {
+  background: #f0ad4e;
+}
+
+.prob.low {
+  background: #5cb85c;
+}
+.hybrid-info {
+  background: #fff7e6;
+  border: 1px solid #ffd591;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.gnn-preview {
+  margin-top: 6px;
+  font-size: 14px;
+}
+/* ==================== GNN PROBABILITY CHART ==================== */
+
+.gnn-prob-chart {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+}
+
+.gnn-prob-chart h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: var(--heading);
+}
+
+.prob-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.prob-label {
+  width: 70px;
+  font-size: 14px;
+  color: var(--muted-text);
+}
+
+.prob-bar {
+  flex: 1;
+  height: 10px;
+  background: var(--soft-bg);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.prob-fill {
+  height: 100%;
+}
+
+.prob-fill.low {
+  background: #4caf50;
+}
+
+.prob-fill.medium {
+  background: #ffb300;
+}
+
+.prob-fill.high {
+  background: #f44336;
+}
+
+.prob-value {
+  width: 60px;
+  text-align: right;
+  font-size: 13px;
+  color: var(--muted-text);
+}
+.btn-report {
+  background: #3b82f6;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-report:hover {
+  background: #2563eb;
+}
+
+.btn-report:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
