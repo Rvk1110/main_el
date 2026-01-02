@@ -15,22 +15,31 @@ export default function ClauseAnalysisTab({
 }) {
   return (
     <div className="card">
-      <div className="card-header">
+      <div className="card-header" style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '24px',
+        gap: '20px',
+        flexWrap: 'wrap'
+      }}>
         <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '600' }}>Analyze a Clause</h2>
 
-        <div className="card-actions" style={{ gap: 8 }}>
-          <button 
-            className="btn" 
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <button
+            className="btn"
             onClick={clearClause}
             style={{
               background: '#f3f4f6',
               color: '#374151',
               border: 'none',
-              padding: '10px 20px',
+              padding: '12px 24px',
               borderRadius: '8px',
               cursor: 'pointer',
-              fontWeight: '500',
-              transition: 'all 0.2s'
+              fontWeight: '600',
+              fontSize: '14px',
+              transition: 'all 0.2s',
+              whiteSpace: 'nowrap'
             }}
             onMouseEnter={(e) => e.target.style.background = '#e5e7eb'}
             onMouseLeave={(e) => e.target.style.background = '#f3f4f6'}
@@ -45,12 +54,14 @@ export default function ClauseAnalysisTab({
               background: loadingClause ? '#9ca3af' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
               color: 'white',
               border: 'none',
-              padding: '10px 24px',
+              padding: '12px 24px',
               borderRadius: '8px',
               cursor: loadingClause ? 'not-allowed' : 'pointer',
               fontWeight: '600',
+              fontSize: '14px',
               boxShadow: loadingClause ? 'none' : '0 4px 12px rgba(102, 126, 234, 0.4)',
-              transition: 'all 0.2s'
+              transition: 'all 0.2s',
+              whiteSpace: 'nowrap'
             }}
           >
             {loadingClause ? "Analyzing..." : "Analyze Clause"}
@@ -59,14 +70,14 @@ export default function ClauseAnalysisTab({
       </div>
 
       {/* Model Selector - Enhanced */}
-      <div style={{ 
+      <div style={{
         margin: '20px 0',
         padding: '16px',
         background: '#f9fafb',
         borderRadius: '12px',
         border: '1px solid #e5e7eb'
       }}>
-        <label style={{ 
+        <label style={{
           display: 'block',
           fontSize: '13px',
           fontWeight: '600',
@@ -171,11 +182,11 @@ export default function ClauseAnalysisTab({
             Hybrid
           </button>
         </div>
-        <p style={{ 
-          fontSize: '12px', 
-          color: '#6b7280', 
+        <p style={{
+          fontSize: '12px',
+          color: '#6b7280',
           marginTop: '10px',
-          marginBottom: 0 
+          marginBottom: 0
         }}>
           {modelMode === "gnn" && "Fast graph neural network predictions"}
           {modelMode === "llm" && "Deep language model analysis with explanations"}
@@ -215,7 +226,7 @@ Example: 'The vendor may terminate this agreement at any time without prior noti
           borderRadius: '12px',
           color: 'white'
         }}>
-          <div className="loader" style={{ 
+          <div className="loader" style={{
             border: '4px solid rgba(255,255,255,0.3)',
             borderTop: '4px solid white',
             borderRadius: '50%',
@@ -268,8 +279,8 @@ Example: 'The vendor may terminate this agreement at any time without prior noti
                     background: getRiskLabel(clauseResult).toLowerCase() === "high"
                       ? '#ef4444'
                       : getRiskLabel(clauseResult).toLowerCase() === "medium"
-                      ? '#f59e0b'
-                      : '#10b981',
+                        ? '#f59e0b'
+                        : '#10b981',
                     color: 'white'
                   }}>
                     {getRiskLabel(clauseResult)} RISK

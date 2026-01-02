@@ -26,9 +26,7 @@ export default function Sidebar({ tab, setTab, clauseResult, docResult }) {
   const navItems = [
     { id: 'clause', label: 'Clause Analysis', icon: '📝' },
     { id: 'document', label: 'Document Analysis', icon: '📄' },
-    { id: 'graph', label: 'Graph View', icon: '🔗' },
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
-    { id: 'audit', label: 'Audit Log', icon: '📋' },
     { id: 'settings', label: 'Settings', icon: '⚙️' },
   ];
 
@@ -127,7 +125,6 @@ export default function Sidebar({ tab, setTab, clauseResult, docResult }) {
               }
             }}
           >
-            <span>{item.icon}</span>
             {!collapsed && <span>{item.label}</span>}
           </button>
         ))}

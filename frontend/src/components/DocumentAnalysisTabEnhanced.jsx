@@ -153,23 +153,32 @@ export default function DocumentAnalysisTabEnhanced({
 
     return (
         <div className="card">
-            <div className="card-header">
+            <div className="card-header" style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '24px',
+                gap: '20px',
+                flexWrap: 'wrap'
+            }}>
                 <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '600' }}>Analyze Full Document</h2>
 
-                <div className="card-actions" style={{ gap: 12, display: 'flex', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
                     <label
                         className="file-upload btn"
                         style={{
                             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                             color: 'white',
-                            padding: '10px 20px',
+                            padding: '12px 24px',
                             borderRadius: '8px',
                             cursor: 'pointer',
                             fontWeight: '600',
+                            fontSize: '14px',
                             border: 'none',
                             boxShadow: '0 4px 12px rgba(102, 126, 234, 0.4)',
                             transition: 'all 0.2s',
-                            display: 'inline-block'
+                            display: 'inline-block',
+                            whiteSpace: 'nowrap'
                         }}
                         onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
                         onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
@@ -189,13 +198,15 @@ export default function DocumentAnalysisTabEnhanced({
                             style={{
                                 background: '#10b981',
                                 color: 'white',
-                                padding: '10px 20px',
+                                padding: '12px 24px',
                                 borderRadius: '8px',
                                 cursor: 'pointer',
                                 fontWeight: '600',
+                                fontSize: '14px',
                                 border: 'none',
                                 boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
-                                transition: 'all 0.2s'
+                                transition: 'all 0.2s',
+                                whiteSpace: 'nowrap'
                             }}
                             onMouseEnter={(e) => {
                                 e.target.style.background = '#059669';
@@ -216,12 +227,14 @@ export default function DocumentAnalysisTabEnhanced({
                         style={{
                             background: '#f3f4f6',
                             color: '#374151',
-                            padding: '10px 20px',
+                            padding: '12px 24px',
                             borderRadius: '8px',
                             cursor: 'pointer',
-                            fontWeight: '500',
+                            fontWeight: '600',
+                            fontSize: '14px',
                             border: 'none',
-                            transition: 'all 0.2s'
+                            transition: 'all 0.2s',
+                            whiteSpace: 'nowrap'
                         }}
                         onMouseEnter={(e) => e.target.style.background = '#e5e7eb'}
                         onMouseLeave={(e) => e.target.style.background = '#f3f4f6'}
