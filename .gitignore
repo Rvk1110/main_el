@@ -5,3 +5,4 @@ outputs/*
 models/gnn/model.pt
 .env
 venv/
+.DS_Store
