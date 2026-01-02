@@ -35,7 +35,6 @@ export default function ExplainabilityPanel({ clause, backendResult, riskScore }
                 onMouseLeave={(e) => e.target.style.background = '#f9fafb'}
             >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontSize: '16px' }}>🔍</span>
                     <span style={{ fontSize: '14px', fontWeight: '600', color: '#374151' }}>
                         Why is this risky?
                     </span>

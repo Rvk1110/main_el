@@ -57,11 +57,14 @@ export const analyzeDocument = async (file) => {
 // ----------------------------------------------------
 // PDF REPORT GENERATION (OPTIONAL)
 // ----------------------------------------------------
-export const generateReport = async (results) => {
+export const generateReport = async (payload) => {
   const res = await API.post(
     "/generate_report",
-    { results },
-    { responseType: "blob" }
+    payload,  // Send the entire payload object
+    {
+      responseType: "blob",
+      headers: { "Content-Type": "application/json" }
+    }
   );
   return res.data;
 };

@@ -25,7 +25,6 @@ export default function DocumentAnalysisTabEnhanced({
     viewerRef,
     sensitivity = 'balanced'
 }) {
-    const [groupByCategory, setGroupByCategory] = useState(false);
     const [showPipeline, setShowPipeline] = useState(false);
     const toast = useToast();
 
@@ -73,11 +72,10 @@ export default function DocumentAnalysisTabEnhanced({
         });
     }, [docResult]);
 
-    // Group clauses by category if enabled
+    // Group clauses by category (always disabled now, keeping for potential future use)
     const groupedClauses = useMemo(() => {
-        if (!groupByCategory) return null;
-        return groupClausesByCategory(clausesWithScores);
-    }, [clausesWithScores, groupByCategory]);
+        return null; // Grouped view removed
+    }, [clausesWithScores]);
 
     // Filter clauses
     const filteredClauses = useMemo(() => {
@@ -121,7 +119,6 @@ export default function DocumentAnalysisTabEnhanced({
             >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '12px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '16px' }}>{categoryInfo.icon}</span>
                         <div style={{
                             fontSize: '13px',
                             fontWeight: '600',
@@ -378,34 +375,18 @@ export default function DocumentAnalysisTabEnhanced({
                     borderRadius: '12px',
                     border: '1px solid #e5e7eb'
                 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
                         <label style={{
-                            fontSize: '13px',
+                            fontSize: '14px',
                             fontWeight: '600',
-                            color: '#6b7280',
+                            color: '#374151',
                             textTransform: 'uppercase',
                             letterSpacing: '0.5px'
                         }}>
                             Filter by Risk Level
                         </label>
-                        <button
-                            onClick={() => setGroupByCategory(!groupByCategory)}
-                            style={{
-                                padding: '6px 12px',
-                                background: groupByCategory ? '#3b82f6' : 'white',
-                                color: groupByCategory ? 'white' : '#374151',
-                                border: `2px solid ${groupByCategory ? '#3b82f6' : '#e5e7eb'}`,
-                                borderRadius: '8px',
-                                cursor: 'pointer',
-                                fontSize: '12px',
-                                fontWeight: '600',
-                                transition: 'all 0.2s'
-                            }}
-                        >
-                            {groupByCategory ? '📋 Grouped View' : '📄 List View'}
-                        </button>
                     </div>
-                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                         {["all", "high", "medium", "low"].map((lvl) => (
                             <button
                                 key={lvl}
@@ -500,43 +481,8 @@ export default function DocumentAnalysisTabEnhanced({
                         borderRadius: '0 0 12px 12px',
                         padding: '20px'
                     }}>
-                        {groupByCategory && groupedClauses ? (
-                            // Grouped by Category View
-                            Object.entries(groupedClauses).map(([category, clauses]) => {
-                                const categoryInfo = getCategoryInfo(category);
-                                return (
-                                    <div key={category} style={{ marginBottom: '24px' }}>
-                                        <div style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '8px',
-                                            marginBottom: '12px',
-                                            padding: '12px',
-                                            background: '#f9fafb',
-                                            borderRadius: '8px'
-                                        }}>
-                                            <span style={{ fontSize: '20px' }}>{categoryInfo.icon}</span>
-                                            <h4 style={{ margin: 0, fontSize: '16px', fontWeight: '600', color: '#1f2937' }}>
-                                                {categoryInfo.label}
-                                            </h4>
-                                            <span style={{
-                                                fontSize: '12px',
-                                                color: '#6b7280',
-                                                background: '#e5e7eb',
-                                                padding: '2px 8px',
-                                                borderRadius: '12px'
-                                            }}>
-                                                {clauses.length} clause{clauses.length !== 1 ? 's' : ''}
-                                            </span>
-                                        </div>
-                                        {clauses.map((clause, idx) => renderClauseCard(clause, `${category}-${idx}`))}
-                                    </div>
-                                );
-                            })
-                        ) : (
-                            // List View
-                            filteredClauses.map((clause, idx) => renderClauseCard(clause, idx))
-                        )}
+                        {/* Card View (Always shown now) */}
+                        {filteredClauses.map((clause, idx) => renderClauseCard(clause, idx))}
 
                         {filteredClauses.length === 0 && (
                             <div style={{

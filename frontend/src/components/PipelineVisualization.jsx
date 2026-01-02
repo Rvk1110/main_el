@@ -168,19 +168,6 @@ export default function PipelineVisualization({ currentStage = 'complete', showD
                     ))}
                 </div>
             )}
-
-            {/* Disclaimer */}
-            <div style={{
-                marginTop: '16px',
-                padding: '12px',
-                background: '#eff6ff',
-                border: '1px solid #bfdbfe',
-                borderRadius: '8px',
-                fontSize: '11px',
-                color: '#1e40af'
-            }}>
-                <strong>Note:</strong> This pipeline visualization is for academic presentation only and represents the logical flow of analysis stages.
-            </div>
         </div>
     );
 }

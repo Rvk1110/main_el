@@ -209,11 +209,14 @@ function AppContent() {
         setGraphData(result.graph);
       }
 
-      toast.showSuccess(`Document analyzed successfully! Found ${totalClauses} clauses.`);
+      // Show success toast with mode info
+      const modeLabel = modelMode === 'gnn' ? 'GNN (Fast)' : modelMode === 'hybrid' ? 'Hybrid' : 'LLM';
+      toast.showSuccess(`Document analyzed successfully using ${modeLabel} mode! Found ${totalClauses} clauses.`);
     } catch (err) {
       console.error("Document analysis error:", err);
       setDocResult({ error: "Failed to analyze document" });
-      toast.showError("Failed to analyze document. Please try again.");
+      setError(`Failed to analyze document: ${err.message}`);
+      toast.showError(`Failed to analyze document: ${err.message}`);
     } finally {
       setLoadingDoc(false);
     }

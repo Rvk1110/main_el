@@ -122,24 +122,58 @@ def hybrid_predict(req: ClauseRequest):
 
 
 # -------------------------------------------------------
-# DOCUMENT ANALYSIS (PDF → CLAUSES → LLM)
+# DOCUMENT ANALYSIS (PDF → CLAUSES → GNN/HYBRID/LLM)
 # -------------------------------------------------------
-@app.post("/analyze_document")
-async def analyze_document(file: UploadFile = File(...)):
+from fastapi import Form
 
+@app.post("/analyze_document")
+async def analyze_document(
+    file: UploadFile = File(...),
+    mode: str = Form("gnn")  # Default to GNN for speed
+):
+    """
+    Analyze a PDF document with selectable model mode.
+    mode: 'gnn' (fast), 'hybrid' (balanced), or 'llm' (thorough)
+    """
     pdf_path = BACKEND_ROOT / f"temp_{uuid.uuid4()}_{file.filename}"
     with open(pdf_path, "wb") as f:
         f.write(await file.read())
 
-    # 🔹 Phase 2 output: list of clean clauses
+    # Phase 2 output: list of clean clauses
     clauses = process_contract(str(pdf_path))
 
     results = []
 
     for clause in clauses:
         clause_text = clause["text"]
-
-        risk = analyze_clause_risk(clause_text)
+        
+        # Select analysis method based on mode
+        if mode == "gnn":
+            # Fast GNN-only analysis
+            try:
+                risk = gnn_predict_clause(clause_text)
+                risk["source"] = "GNN"
+            except Exception as e:
+                risk = {"error": str(e), "source": "GNN", "risk_level": "unknown"}
+                
+        elif mode == "hybrid":
+            # Hybrid: GNN first, LLM if low confidence
+            try:
+                gnn_res = gnn_predict_clause(clause_text)
+                if gnn_res.get("confidence", 0) >= 0.60:
+                    risk = gnn_res
+                    risk["source"] = "GNN"
+                else:
+                    risk = analyze_clause_risk(clause_text)
+                    risk["source"] = "HYBRID_LLM"
+                    risk["gnn_confidence"] = gnn_res.get("confidence", 0)
+            except Exception as e:
+                risk = analyze_clause_risk(clause_text)
+                risk["source"] = "LLM_FALLBACK"
+        else:
+            # LLM-only analysis (thorough but slow)
+            risk = analyze_clause_risk(clause_text)
+            risk["source"] = "LLM"
 
         results.append({
             "clause_id": clause["clause_id"],
@@ -154,7 +188,8 @@ async def analyze_document(file: UploadFile = File(...)):
 
     return {
         "total_clauses": len(results),
-        "results": results
+        "results": results,
+        "mode": mode
     }
 
 from fastapi import File, UploadFile
