@@ -18,8 +18,12 @@ import GraphVisualization from "./components/GraphVisualization";
 import DashboardMetricsEnhanced from "./components/DashboardMetricsEnhanced";
 import AuditLogViewer from "./components/AuditLogViewer";
 import RiskSensitivitySlider from "./components/RiskSensitivitySlider";
+import ErrorBoundary from "./components/ErrorBoundary";
+import { ToastProvider } from "./contexts/ToastContext";
+import { useToast } from "./hooks/useToast";
+import { useKeyboardShortcut } from "./hooks/useKeyboardShortcut";
 
-export default function App() {
+function AppContent() {
   // Top-level app state
   const [tab, setTab] = useState("clause");
 
@@ -54,6 +58,17 @@ export default function App() {
 
   // PDF viewer reference
   const viewerRef = useRef(null);
+  const searchRef = useRef(null);
+
+  // Toast notifications
+  const toast = useToast();
+
+  // Keyboard shortcut: Ctrl+K to focus search
+  useKeyboardShortcut('k', () => {
+    if (searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, { ctrl: true });
 
   // ------------------------- Helpers -------------------------
   const downloadJSON = (data, filename = "result.json") => {
@@ -119,9 +134,11 @@ export default function App() {
       }
 
       setClauseResult(result);
+      toast.showSuccess(`Clause analyzed successfully with ${modelMode.toUpperCase()}!`);
     } catch (err) {
       console.error("Clause analysis error:", err);
       setClauseResult({ error: "Failed to analyze clause" });
+      toast.showError("Failed to analyze clause. Please try again.");
     } finally {
       setLoadingClause(false);
     }
@@ -191,9 +208,12 @@ export default function App() {
       if (result.graph) {
         setGraphData(result.graph);
       }
+
+      toast.showSuccess(`Document analyzed successfully! Found ${totalClauses} clauses.`);
     } catch (err) {
       console.error("Document analysis error:", err);
       setDocResult({ error: "Failed to analyze document" });
+      toast.showError("Failed to analyze document. Please try again.");
     } finally {
       setLoadingDoc(false);
     }
@@ -224,9 +244,10 @@ export default function App() {
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
+      toast.showSuccess("Report downloaded successfully!");
     } catch (err) {
       console.error("Download report error:", err);
-      alert("Failed to download report");
+      toast.showError("Failed to download report. Please try again.");
     }
   };
 
@@ -267,16 +288,62 @@ export default function App() {
 
       <div className="main">
         {/* NAVBAR */}
-        <div className="navbar">
-          <h1 className="app-title">AI ClauseGuard</h1>
+        <div style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          padding: '24px 32px',
+          borderRadius: '16px',
+          boxShadow: '0 8px 24px rgba(102, 126, 234, 0.25)',
+          marginBottom: '28px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '24px',
+          flexWrap: 'wrap'
+        }}>
+          <h1 style={{
+            margin: 0,
+            fontSize: '28px',
+            fontWeight: '700',
+            color: 'white',
+            letterSpacing: '-0.5px'
+          }}>
+            AI ClauseGuard
+          </h1>
 
-          <input
-            className="search-bar"
-            type="text"
-            placeholder="Search clauses..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <div style={{ position: 'relative', flex: '1', maxWidth: '500px', minWidth: '250px' }}>
+            <input
+              ref={searchRef}
+              className="search-bar"
+              type="text"
+              placeholder="Search clauses"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              aria-label="Search clauses"
+              style={{
+                width: '100%',
+                padding: '14px 20px',
+                borderRadius: '12px',
+                border: '2px solid rgba(255,255,255,0.3)',
+                background: 'rgba(255,255,255,0.95)',
+                fontSize: '15px',
+                fontWeight: '500',
+                color: '#1f2937',
+                transition: 'all 0.2s',
+                backdropFilter: 'blur(10px)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+              }}
+              onFocus={(e) => {
+                e.target.style.background = 'white';
+                e.target.style.borderColor = 'rgba(255,255,255,0.8)';
+                e.target.style.boxShadow = '0 6px 20px rgba(0,0,0,0.15)';
+              }}
+              onBlur={(e) => {
+                e.target.style.background = 'rgba(255,255,255,0.95)';
+                e.target.style.borderColor = 'rgba(255,255,255,0.3)';
+                e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+              }}
+            />
+          </div>
         </div>
 
         {/* ERROR BANNER */}
@@ -367,5 +434,16 @@ export default function App() {
         )}
       </div>
     </div>
+  );
+}
+
+// Wrap with providers
+export default function App() {
+  return (
+    <ErrorBoundary>
+      <ToastProvider>
+        <AppContent />
+      </ToastProvider>
+    </ErrorBoundary>
   );
 }

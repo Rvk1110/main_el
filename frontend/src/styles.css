@@ -221,8 +221,16 @@ button.secondary {
   color: #fff;
   border-color: var(--primary);
 }
-.pdf-viewer { background: #ffffff; }
-.pdf-page { display:block; width:100%; }
+
+.pdf-viewer {
+  background: #ffffff;
+}
+
+.pdf-page {
+  display: block;
+  width: 100%;
+}
+
 .pdf-highlight {
   position: absolute;
   left: 0;
@@ -232,6 +240,7 @@ button.secondary {
   border-left: 6px solid rgba(255, 214, 0, 0.9);
   pointer-events: none;
 }
+
 .pdf-page-wrapper {
   position: relative;
 }
@@ -246,8 +255,8 @@ button.secondary {
 
 /* small polishing: active clause box style if you want to highlight clicked clause in list */
 .active-clause {
-  border-left: 4px solid rgba(79,139,255,0.16);
-  background: linear-gradient(180deg, rgba(79,139,255,0.02), transparent);
+  border-left: 4px solid rgba(79, 139, 255, 0.16);
+  background: linear-gradient(180deg, rgba(79, 139, 255, 0.02), transparent);
 }
 
 .mode-switch {
@@ -266,6 +275,7 @@ button.secondary {
   background-color: var(--primary);
   color: white;
 }
+
 .gnn-result {
   padding: 12px;
   border: 1px solid var(--border);
@@ -315,6 +325,7 @@ button.secondary {
 .prob.low {
   background: #5cb85c;
 }
+
 .hybrid-info {
   background: #fff7e6;
   border: 1px solid #ffd591;
@@ -327,6 +338,7 @@ button.secondary {
   margin-top: 6px;
   font-size: 14px;
 }
+
 /* ==================== GNN PROBABILITY CHART ==================== */
 
 .gnn-prob-chart {
@@ -386,6 +398,7 @@ button.secondary {
   font-size: 13px;
   color: var(--muted-text);
 }
+
 .btn-report {
   background: #3b82f6;
   color: white;
@@ -426,17 +439,199 @@ button.secondary {
 
 /* ========== SPINNER ANIMATION ========== */
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loader {
-  border: 4px solid rgba(255,255,255,0.3);
-  borderTop: 4px solid white;
-  borderRadius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid white;
+  border-radius: 50%;
   width: 40px;
   height: 40px;
   animation: spin 1s linear infinite;
   margin: 0 auto;
 }
 
+/* ========== NEW ANIMATIONS ========== */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ========== DARK MODE THEME VARIABLES ========== */
+:root {
+  --bg-primary: #F5F6F7;
+  --bg-secondary: #FFFFFF;
+  --text-primary: #1C1E21;
+  --text-secondary: #6b7280;
+  --border-color: #E1E4E8;
+  --accent-color: #667eea;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+  --border-color: #404040;
+  --accent-color: #8b5cf6;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] .navbar {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] textarea,
+[data-theme="dark"] .search-bar,
+[data-theme="dark"] .filter-btn {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .tab {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .tab:hover {
+  background: #3a3a3a;
+}
+
+/* ========== ACCESSIBILITY IMPROVEMENTS ========== */
+*:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* Skip to main content link for screen readers */
+.skip-to-main {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 999;
+  padding: 1em;
+  background-color: var(--accent-color);
+  color: white;
+  text-decoration: none;
+}
+
+.skip-to-main:focus {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ========== SMOOTH TRANSITIONS ========== */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========== CLAUSE CARD ANIMATIONS ========== */
+.clause-card-enter {
+  animation: slideUpFadeIn 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes slideUpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered animation delays */
+.clause-card-enter:nth-child(1) { animation-delay: 0s; }
+.clause-card-enter:nth-child(2) { animation-delay: 0.05s; }
+.clause-card-enter:nth-child(3) { animation-delay: 0.1s; }
+.clause-card-enter:nth-child(4) { animation-delay: 0.15s; }
+.clause-card-enter:nth-child(5) { animation-delay: 0.2s; }
+.clause-card-enter:nth-child(n+6) { animation-delay: 0.25s; }
+
+/* Button micro-interactions */
+button:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+button:not(:disabled):hover {
+  transform: translateY(-2px);
+}

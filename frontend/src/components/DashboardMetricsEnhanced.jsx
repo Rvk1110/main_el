@@ -2,6 +2,9 @@
 import React from 'react';
 import { calculateOverallRiskScore } from '../utils/RiskScoreCalculator';
 import { getCategoryStats, getCategoryInfo } from '../utils/ClauseClassifier';
+import RiskDistributionChart from './RiskDistributionChart';
+import CategoryBarChart from './CategoryBarChart';
+import DashboardSummaryCards from './DashboardSummaryCards';
 
 export default function DashboardMetricsEnhanced({ docResult, sensitivity = 'balanced' }) {
     if (!docResult || !docResult.results) {
@@ -58,6 +61,20 @@ export default function DashboardMetricsEnhanced({ docResult, sensitivity = 'bal
 
     const riskLevel = getOverallRiskLevel();
 
+    // Prepare data for charts
+    const chartData = clauses.map(clause => ({
+        risk: ((clause.risk && clause.risk.risk_level) || clause.risk_level || 'low').toString().toLowerCase(),
+        category: clause.category || 'General'
+    }));
+
+    const metrics = {
+        totalClauses,
+        highRisk,
+        mediumRisk,
+        lowRisk,
+        overallScore
+    };
+
     return (
         <div>
             {/* Overall Risk Score Card */}
@@ -92,7 +109,21 @@ export default function DashboardMetricsEnhanced({ docResult, sensitivity = 'bal
                 </div>
             </div>
 
-            {/* Statistics Grid */}
+            {/* Summary Cards */}
+            <DashboardSummaryCards metrics={metrics} />
+
+            {/* Charts Grid */}
+            <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+                gap: '20px',
+                marginBottom: '24px'
+            }}>
+                <RiskDistributionChart data={chartData} />
+                <CategoryBarChart data={chartData} />
+            </div>
+
+            {/* Statistics Grid (Keep for backward compatibility) */}
             <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',

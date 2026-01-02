@@ -1,5 +1,8 @@
 // frontend/src/components/ClauseAnalysisTab.jsx
-import React from 'react';
+import React, { useState } from 'react';
+import SkeletonLoader from './SkeletonLoader';
+import { useKeyboardShortcut } from '../hooks/useKeyboardShortcut';
+import { useDebounce } from '../hooks/useDebounce';
 
 export default function ClauseAnalysisTab({
   clause,
@@ -13,6 +16,16 @@ export default function ClauseAnalysisTab({
   getRiskLabel,
   getConfidence
 }) {
+  // Search state
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearch = useDebounce(searchTerm, 300);
+
+  // Ctrl+Enter to analyze
+  useKeyboardShortcut('Enter', () => {
+    if (clause.trim() && !loadingClause) {
+      handleClauseAnalyze();
+    }
+  }, { ctrl: true });
   return (
     <div className="card">
       <div className="card-header" style={{
@@ -63,6 +76,7 @@ export default function ClauseAnalysisTab({
               transition: 'all 0.2s',
               whiteSpace: 'nowrap'
             }}
+            aria-label={loadingClause ? "Analyzing clause" : "Analyze clause (Ctrl+Enter)"}
           >
             {loadingClause ? "Analyzing..." : "Analyze Clause"}
           </button>
@@ -196,7 +210,7 @@ export default function ClauseAnalysisTab({
 
       <textarea
         className="clause-textarea"
-        placeholder="Enter or paste contract clause here...
+        placeholder="Enter or paste contract clause here... (Ctrl+Enter to analyze)
 
 Example: 'The vendor may terminate this agreement at any time without prior notice or compensation to the client.'"
         value={clause}
@@ -215,35 +229,73 @@ Example: 'The vendor may terminate this agreement at any time without prior noti
         }}
         onFocus={(e) => e.target.style.borderColor = '#667eea'}
         onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+        aria-label="Contract clause text input"
+        aria-describedby="clause-help-text"
       />
 
       {loadingClause && (
         <div style={{
           marginTop: 20,
-          padding: '30px',
-          textAlign: 'center',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          borderRadius: '12px',
-          color: 'white'
+          padding: '24px',
+          background: 'white',
+          border: '2px solid #e5e7eb',
+          borderRadius: '16px'
         }}>
-          <div className="loader" style={{
-            border: '4px solid rgba(255,255,255,0.3)',
-            borderTop: '4px solid white',
-            borderRadius: '50%',
-            width: '40px',
-            height: '40px',
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto 16px'
-          }}></div>
-          <p style={{ margin: 0, fontSize: '16px', fontWeight: '600' }}>
-            Analyzing clause with {modelMode.toUpperCase()}...
-          </p>
+          <div style={{
+            background: 'linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%)',
+            padding: '20px 24px',
+            borderRadius: '12px',
+            marginBottom: '16px'
+          }}>
+            <SkeletonLoader width="200px" height="24px" style={{ marginBottom: '12px' }} />
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <SkeletonLoader width="100px" height="28px" borderRadius="20px" />
+              <SkeletonLoader width="120px" height="28px" borderRadius="20px" />
+            </div>
+          </div>
+          <div style={{ padding: '24px' }}>
+            <SkeletonLoader width="120px" height="16px" style={{ marginBottom: '8px' }} />
+            <SkeletonLoader width="100%" height="16px" style={{ marginBottom: '8px' }} />
+            <SkeletonLoader width="95%" height="16px" style={{ marginBottom: '20px' }} />
+
+            <SkeletonLoader width="100px" height="16px" style={{ marginBottom: '8px' }} />
+            <SkeletonLoader width="100%" height="16px" style={{ marginBottom: '8px' }} />
+            <SkeletonLoader width="90%" height="16px" />
+          </div>
         </div>
       )}
 
       {/* Enhanced Result Display */}
       {clauseResult && !loadingClause && (
         <div style={{ marginTop: 24 }}>
+          {/* Search Bar */}
+          {!clauseResult.error && (
+            <div style={{ marginBottom: '16px' }}>
+              <input
+                type="text"
+                placeholder="🔍 Search in results..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  borderRadius: '8px',
+                  border: '2px solid #e5e7eb',
+                  fontSize: '14px',
+                  transition: 'border-color 0.2s'
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#667eea'}
+                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                aria-label="Search clause results"
+              />
+              {searchTerm && (
+                <div style={{ marginTop: '8px', fontSize: '13px', color: '#6b7280' }}>
+                  Searching for: "{searchTerm}"
+                </div>
+              )}
+            </div>
+          )}
+
           {clauseResult.error ? (
             <div style={{
               padding: '20px',

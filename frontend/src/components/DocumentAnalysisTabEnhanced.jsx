@@ -1,10 +1,16 @@
 // frontend/src/components/DocumentAnalysisTabEnhanced.jsx
-import React, { useState, useMemo } from 'react';
-import PDFViewer from './PDFViewer';
+import React, { useState, useMemo, lazy, Suspense } from 'react';
 import PipelineVisualization from './PipelineVisualization';
 import ExplainabilityPanel from './ExplainabilityPanel';
+import { DocumentSkeleton } from './SkeletonLoader';
+import EmptyState from './EmptyState';
+import { exportToCSV, exportToJSON } from '../utils/exportUtils';
+import { useToast } from '../hooks/useToast';
 import { classifyClause, getCategoryInfo, groupClausesByCategory } from '../utils/ClauseClassifier';
 import { calculateRiskScore, getRiskColor } from '../utils/RiskScoreCalculator';
+
+// Lazy load PDF viewer for better performance
+const PDFViewer = lazy(() => import('./PDFViewer'));
 
 export default function DocumentAnalysisTabEnhanced({
     file,
@@ -21,6 +27,33 @@ export default function DocumentAnalysisTabEnhanced({
 }) {
     const [groupByCategory, setGroupByCategory] = useState(false);
     const [showPipeline, setShowPipeline] = useState(false);
+    const toast = useToast();
+
+    // Export handlers
+    const handleExportCSV = () => {
+        try {
+            const exportData = clausesWithScores.map(clause => ({
+                'Clause Index': clause.clause_index ?? clause.originalIndex + 1,
+                'Category': clause.category,
+                'Risk Level': (clause.risk && clause.risk.risk_level) || clause.risk_level || 'unknown',
+                'Risk Score': clause.riskScore,
+                'Text': clause.text || clause.clause_text
+            }));
+            exportToCSV(exportData, 'contract_analysis.csv');
+            toast.showSuccess('Exported to CSV successfully!');
+        } catch (error) {
+            toast.showError('Failed to export CSV');
+        }
+    };
+
+    const handleExportJSON = () => {
+        try {
+            exportToJSON(docResult, 'contract_analysis.json');
+            toast.showSuccess('Exported to JSON successfully!');
+        } catch (error) {
+            toast.showError('Failed to export JSON');
+        }
+    };
 
     // Calculate risk scores for all clauses
     const clausesWithScores = useMemo(() => {
@@ -182,12 +215,14 @@ export default function DocumentAnalysisTabEnhanced({
                         }}
                         onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
                         onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
+                        aria-label="Choose PDF contract file"
                     >
                         <input
                             type="file"
                             accept="application/pdf"
                             onChange={handleFileChange}
                             style={{ display: "none" }}
+                            aria-label="PDF file input"
                         />
                         {file ? `${file.name}` : "Choose PDF Contract"}
                     </label>
@@ -216,9 +251,69 @@ export default function DocumentAnalysisTabEnhanced({
                                 e.target.style.background = '#10b981';
                                 e.target.style.transform = 'translateY(0)';
                             }}
+                            aria-label="Download risk analysis report as PDF"
                         >
                             Download Report
                         </button>
+                    )}
+
+                    {docResult && (
+                        <>
+                            <button
+                                onClick={handleExportCSV}
+                                style={{
+                                    background: '#3b82f6',
+                                    color: 'white',
+                                    padding: '12px 24px',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer',
+                                    fontWeight: '600',
+                                    fontSize: '14px',
+                                    border: 'none',
+                                    boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+                                    transition: 'all 0.2s',
+                                    whiteSpace: 'nowrap'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.target.style.background = '#2563eb';
+                                    e.target.style.transform = 'translateY(-2px)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.background = '#3b82f6';
+                                    e.target.style.transform = 'translateY(0)';
+                                }}
+                                aria-label="Export analysis to CSV"
+                            >
+                                Export CSV
+                            </button>
+                            <button
+                                onClick={handleExportJSON}
+                                style={{
+                                    background: '#8b5cf6',
+                                    color: 'white',
+                                    padding: '12px 24px',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer',
+                                    fontWeight: '600',
+                                    fontSize: '14px',
+                                    border: 'none',
+                                    boxShadow: '0 4px 12px rgba(139, 92, 246, 0.3)',
+                                    transition: 'all 0.2s',
+                                    whiteSpace: 'nowrap'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.target.style.background = '#7c3aed';
+                                    e.target.style.transform = 'translateY(-2px)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.background = '#8b5cf6';
+                                    e.target.style.transform = 'translateY(0)';
+                                }}
+                                aria-label="Export analysis to JSON"
+                            >
+                                Export JSON
+                            </button>
+                        </>
                     )}
 
                     <button
@@ -238,6 +333,7 @@ export default function DocumentAnalysisTabEnhanced({
                         }}
                         onMouseEnter={(e) => e.target.style.background = '#e5e7eb'}
                         onMouseLeave={(e) => e.target.style.background = '#f3f4f6'}
+                        aria-label="Clear document and results"
                     >
                         Clear
                     </button>
@@ -356,34 +452,25 @@ export default function DocumentAnalysisTabEnhanced({
                     overflow: 'hidden',
                     border: '2px solid #e5e7eb'
                 }}>
-                    <PDFViewer ref={viewerRef} file={file} />
+                    <Suspense fallback={
+                        <div style={{
+                            padding: '40px',
+                            textAlign: 'center',
+                            background: '#f9fafb',
+                            borderRadius: '12px'
+                        }}>
+                            <div style={{ fontSize: '48px', marginBottom: '16px' }}>📄</div>
+                            <p style={{ color: '#6b7280', margin: 0 }}>Loading PDF viewer...</p>
+                        </div>
+                    }>
+                        <PDFViewer ref={viewerRef} file={file} />
+                    </Suspense>
                 </div>
             )}
 
             {/* LOADING INDICATOR */}
             {loadingDoc && (
-                <div style={{
-                    marginTop: 20,
-                    padding: '40px',
-                    textAlign: 'center',
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    borderRadius: '12px',
-                    color: 'white'
-                }}>
-                    <div className="loader" style={{
-                        border: '4px solid rgba(255,255,255,0.3)',
-                        borderTop: '4px solid white',
-                        borderRadius: '50%',
-                        width: '50px',
-                        height: '50px',
-                        animation: 'spin 1s linear infinite',
-                        margin: '0 auto 20px'
-                    }}></div>
-                    <h3 style={{ margin: '0 0 10px 0', fontSize: '20px' }}>Analyzing Contract...</h3>
-                    <p style={{ margin: 0, opacity: 0.9, fontSize: '14px' }}>
-                        Extracting clauses, analyzing risks, and generating insights
-                    </p>
-                </div>
+                <DocumentSkeleton />
             )}
 
             {/* DOCUMENT RESULTS */}

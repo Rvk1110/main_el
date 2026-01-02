@@ -85,6 +85,7 @@ export default function Sidebar({ tab, setTab, clauseResult, docResult }) {
           }}
           onMouseEnter={(e) => e.target.style.background = 'rgba(255,255,255,0.3)'}
           onMouseLeave={(e) => e.target.style.background = 'rgba(255,255,255,0.2)'}
+          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {collapsed ? '→' : '←'}
         </button>
