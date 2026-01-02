@@ -404,3 +404,39 @@ button.secondary {
   background: #9ca3af;
   cursor: not-allowed;
 }
+
+/* ========== APP LAYOUT WITH SIDEBAR ========== */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+  margin-left: 280px;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+  background: #F5F6F7;
+}
+
+/* When sidebar is collapsed */
+.main.collapsed {
+  margin-left: 70px;
+}
+
+/* ========== SPINNER ANIMATION ========== */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader {
+  border: 4px solid rgba(255,255,255,0.3);
+  borderTop: 4px solid white;
+  borderRadius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
