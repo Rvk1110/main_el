@@ -13,9 +13,9 @@ import "./styles.css";
 import Sidebar from "./components/Sidebar";
 import PDFViewer from "./components/PDFViewer";
 import ClauseAnalysisTab from "./components/ClauseAnalysisTab";
-import DocumentAnalysisTab from "./components/DocumentAnalysisTab";
+import DocumentAnalysisTabEnhanced from "./components/DocumentAnalysisTabEnhanced";
 import GraphVisualization from "./components/GraphVisualization";
-import DashboardMetrics from "./components/DashboardMetrics";
+import DashboardMetricsEnhanced from "./components/DashboardMetricsEnhanced";
 import AuditLogViewer from "./components/AuditLogViewer";
 import RiskSensitivitySlider from "./components/RiskSensitivitySlider";
 
@@ -300,7 +300,7 @@ export default function App() {
 
         {/* DOCUMENT ANALYSIS TAB */}
         {tab === "document" && (
-          <DocumentAnalysisTab
+          <DocumentAnalysisTabEnhanced
             file={file}
             handleFileChange={handleFileChange}
             loadingDoc={loadingDoc}
@@ -311,6 +311,7 @@ export default function App() {
             riskFilter={riskFilter}
             setRiskFilter={setRiskFilter}
             viewerRef={viewerRef}
+            sensitivity={sensitivity}
           />
         )}
 
@@ -336,7 +337,7 @@ export default function App() {
             <div className="card-header">
               <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '600' }}>Contract Risk Dashboard</h2>
             </div>
-            <DashboardMetrics metrics={metrics} />
+            <DashboardMetricsEnhanced docResult={docResult} sensitivity={sensitivity} />
           </div>
         )}
 
